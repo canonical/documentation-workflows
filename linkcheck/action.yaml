@@ -1,0 +1,11 @@
+name: 'Link Check'
+description: 'Checks links in documentation'
+inputs:
+  repo-token:
+    description: 'GitHub token'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - run: python3 ./linkcheck.py
+      shell: bash

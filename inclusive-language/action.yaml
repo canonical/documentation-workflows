@@ -1,0 +1,11 @@
+name: 'Inclusive Language Check'
+description: 'Checks for inclusive language in documentation'
+inputs:
+  repo-token:
+    description: 'GitHub token'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - run: python3 ./inclusive_language.py
+      shell: bash
