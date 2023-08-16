@@ -1,0 +1,65 @@
+name: Automatic documentation checks
+
+on:
+  workflow_call:
+    inputs:
+      working-directory:
+        description: 'Working directory'
+        required: true
+        type: string
+    outputs:
+      spellcheck-result:
+        description: "Result of the spelling check"
+        value: ${{ jobs.spellcheck.outputs.result }}
+      woke-result:
+        description: "Result of the inclusive language check"
+        value: ${{ jobs.woke.outputs.result }}
+      linkcheck-result:
+        description: "Result of the link check"
+        value: ${{ jobs.linkcheck.outputs.result }}
+
+jobs:
+  spellcheck:
+    name: Spelling check
+    runs-on: ubuntu-latest
+    outputs:
+      result: ${{ steps.spellcheck-step.outcome }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Spell Check
+        id: spellcheck-step
+        uses: canonical/documentation-workflows/spellcheck-action@main
+        with:
+          working-directory: ${{ inputs.working-directory }}
+
+  woke:
+    name: Inclusive language check
+    runs-on: ubuntu-latest
+    outputs:
+      result: ${{ steps.woke-step.outcome }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Inclusive Language Check
+        id: woke-step
+        uses: canonical/documentation-workflows/inclusive-language-action@main
+        with:
+          working-directory: ${{ inputs.working-directory }}
+
+  linkcheck:
+    name: Link check
+    runs-on: ubuntu-latest
+    outputs:
+      result: ${{ steps.linkcheck-step.outcome }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Link Check
+        id: linkcheck-step
+        uses: canonical/documentation-workflows/linkcheck-action@main
+        with:
+          working-directory: ${{ inputs.working-directory }}
