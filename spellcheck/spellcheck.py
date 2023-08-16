@@ -1,8 +1,5 @@
-import subprocess
 import sys
-
-def run_command(command, cwd):
-    subprocess.run(command, check=True, shell=True, cwd=cwd)
+from utils import run_command
 
 working_directory = sys.argv[1]
 
