@@ -1,4 +1,5 @@
 import sys
+import os
 
 utils_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'utils.py')
 from utils_path import run_command
