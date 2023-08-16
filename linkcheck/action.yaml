@@ -8,5 +8,5 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - run: python3 ./linkcheck.py ${{ inputs.working-directory }}
+    - run: python3 $GITHUB_ACTION_PATH/linkcheck.py ${{ inputs.working-directory }}
       shell: bash
