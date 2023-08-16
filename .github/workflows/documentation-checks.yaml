@@ -30,7 +30,7 @@ jobs:
 
       - name: Spell Check
         id: spellcheck-step
-        uses: canonical/documentation-workflows/spellcheck-action@main
+        uses: canonical/documentation-workflows/spellcheck@main
         with:
           working-directory: ${{ inputs.working-directory }}
 
@@ -45,7 +45,7 @@ jobs:
 
       - name: Inclusive Language Check
         id: woke-step
-        uses: canonical/documentation-workflows/inclusive-language-action@main
+        uses: canonical/documentation-workflows/inclusive-language@main
         with:
           working-directory: ${{ inputs.working-directory }}
 
@@ -60,6 +60,6 @@ jobs:
 
       - name: Link Check
         id: linkcheck-step
-        uses: canonical/documentation-workflows/linkcheck-action@main
+        uses: canonical/documentation-workflows/linkcheck@main
         with:
           working-directory: ${{ inputs.working-directory }}
