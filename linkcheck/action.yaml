@@ -1,11 +1,12 @@
 name: 'Link Check'
 description: 'Checks links in documentation'
 inputs:
-  repo-token:
-    description: 'GitHub token'
+  working-directory:
+    description: 'Working directory'
     required: true
+    default: '.'
 runs:
   using: 'composite'
   steps:
-    - run: python3 ./linkcheck.py
+    - run: python3 ./linkcheck.py ${{ inputs.working-directory }}
       shell: bash
