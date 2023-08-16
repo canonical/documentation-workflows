@@ -1,8 +1,7 @@
 import sys
-import os
 
-utils_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'utils.py')
-from utils_path import run_command
+def run_command(command, cwd):
+    subprocess.run(command, check=True, shell=True, cwd=cwd)
 
 working_directory = sys.argv[1]
 
