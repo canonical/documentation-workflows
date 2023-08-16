@@ -1,0 +1,11 @@
+name: 'Documentation Spell Check'
+description: 'Checks spelling in documentation'
+inputs:
+  repo-token:
+    description: 'GitHub token'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - run: python3 ./spellcheck.py
+      shell: bash
