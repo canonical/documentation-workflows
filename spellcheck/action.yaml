@@ -8,5 +8,5 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - run: python3 ./spellcheck.py ${{ inputs.working-directory }}
+    - run: python3 $GITHUB_ACTION_PATH/spellcheck.py ${{ inputs.working-directory }}
       shell: bash
