@@ -1,5 +1,5 @@
 import sys
-from utils import run_command
+from ..utils import run_command
 
 working_directory = sys.argv[1]
 
