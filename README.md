@@ -8,6 +8,15 @@ This repository contains a collection of GitHub Actions and workflows designed t
   
 - **Reusable Workflows**: In addition to individual actions, this repository offers a top-level workflow (`documentation-checks.yaml`) that combines multiple checks. This workflow can be called from other repositories, providing a comprehensive documentation validation process in a single step.
 
+## Requirements
+
+To be able to use the workflow, your repository must have a Makefile (at the location specified by `working-directory`) that defines the following targets:
+
+- `make install` - install the tools needed for all checks
+- `make woke` - run the inclusive language check
+- `make linkcheck` - run the link validator
+- `make spelling` - run the spelling check
+
 ## Using the Reusable Workflow
 
 To utilize the `documentation-checks.yml` workflow in another repository, create a new workflow and reference it using the `uses` directive. Here's a basic example:
@@ -26,7 +35,7 @@ jobs:
       working-directory: '.'
 ```
 
-If you wnat to use a workflow version other than `main`, replace `@main` with the appropriate branch or tag.
+If you want to use a workflow version other than `main`, replace `@main` with the appropriate branch or tag.
 
 ## Contributing
 
