@@ -10,56 +10,43 @@ on:
     outputs:
       spellcheck-result:
         description: "Result of the spelling check"
-        value: ${{ jobs.spellcheck.outputs.result }}
+        value: ${{ jobs.docchecks.outputs.result_spelling }}
       woke-result:
         description: "Result of the inclusive language check"
-        value: ${{ jobs.woke.outputs.result }}
+        value: ${{ jobs.docchecks.outputs.result_woke }}
       linkcheck-result:
         description: "Result of the link check"
-        value: ${{ jobs.linkcheck.outputs.result }}
+        value: ${{ jobs.docchecks.outputs.result_links }}
 
 jobs:
-  spellcheck:
-    name: Spelling check
+  docchecks:
+    name: Run documentation checks
     runs-on: ubuntu-latest
     outputs:
-      result: ${{ steps.spellcheck-step.outcome }}
+      result_spelling: ${{ steps.spellcheck-step.outcome }}
+      result_woke: ${{ steps.woke-step.outcome }}
+      result_links: ${{ steps.linkcheck-step.outcome }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
       - name: Spell Check
         id: spellcheck-step
+        if: success() || failure()
         uses: canonical/documentation-workflows/spellcheck@main
         with:
           working-directory: ${{ inputs.working-directory }}
 
-  woke:
-    name: Inclusive language check
-    runs-on: ubuntu-latest
-    outputs:
-      result: ${{ steps.woke-step.outcome }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
       - name: Inclusive Language Check
         id: woke-step
+        if: success() || failure()
         uses: canonical/documentation-workflows/inclusive-language@main
         with:
           working-directory: ${{ inputs.working-directory }}
 
-  linkcheck:
-    name: Link check
-    runs-on: ubuntu-latest
-    outputs:
-      result: ${{ steps.linkcheck-step.outcome }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
       - name: Link Check
         id: linkcheck-step
+        if: success() || failure()
         uses: canonical/documentation-workflows/linkcheck@main
         with:
           working-directory: ${{ inputs.working-directory }}
