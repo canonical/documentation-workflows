@@ -35,6 +35,19 @@ jobs:
       working-directory: '.'
 ```
 
+By default, the workflow will run using Python 3.10. You can choose a different version of the interpreter with the `python-version` input variable. For example:
+
+```yaml
+...
+
+jobs:
+  documentation-checks:
+    uses: canonical/documentation-workflows/.github/workflows/documentation-checks.yml@main
+    with:
+      working-directory: '.'
+      python-version: '3.12'
+```
+
 If you want to use a workflow version other than `main`, replace `@main` with the appropriate branch or tag.
 
 ## Contributing

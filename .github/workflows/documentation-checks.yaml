@@ -7,6 +7,11 @@ on:
         description: 'Working directory'
         required: true
         type: string
+      python-version:
+        description: 'Version of the Python interpreter to use (defaults to 3.10)'
+        required: false
+        type: string
+        default: "3.10"
     outputs:
       spellcheck-result:
         description: "Result of the spelling check"
@@ -29,6 +34,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ inputs.python-version }}
 
       - name: Spell Check
         id: spellcheck-step
