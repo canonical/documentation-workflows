@@ -60,3 +60,10 @@ jobs:
         uses: canonical/documentation-workflows/linkcheck@main
         with:
           working-directory: ${{ inputs.working-directory }}
+
+      - name: Upload built docs as artifact to ease human review
+        if: success()
+        uses: actions/upload-artifact@v3
+        with:
+          name: built-docs
+          path: ${{ inputs.working-directory }}/_build/
