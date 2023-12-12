@@ -22,6 +22,9 @@ on:
       linkcheck-result:
         description: "Result of the link check"
         value: ${{ jobs.docchecks.outputs.result_links }}
+      pa11y-result:
+          description: "Result of the pa11y check"
+          value: ${{ jobs.docchecks.outputs.result_pa11y }}
 
 jobs:
   docchecks:
@@ -31,6 +34,7 @@ jobs:
       result_spelling: ${{ steps.spellcheck-step.outcome }}
       result_woke: ${{ steps.woke-step.outcome }}
       result_links: ${{ steps.linkcheck-step.outcome }}
+      result_pa11y: ${{ steps.pa11y-step.outcome }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -58,5 +62,13 @@ jobs:
         id: linkcheck-step
         if: success() || failure()
         uses: canonical/documentation-workflows/linkcheck@main
+        with:
+          working-directory: ${{ inputs.working-directory }}
+
+      - name: Accessibility Check
+        id: pa11y-step
+        continue-on-error: true
+        if: success() || failure()
+        uses: canonical/documentation-workflows/pa11y@main
         with:
           working-directory: ${{ inputs.working-directory }}
