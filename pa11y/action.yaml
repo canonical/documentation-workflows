@@ -1,0 +1,12 @@
+name: 'Accessibility check'
+description: 'Runs pa11y against the documentation'
+inputs:
+  working-directory:
+    description: 'Working directory'
+    required: true
+    default: '.'
+runs:
+  using: 'composite'
+  steps:
+    - run: python3 $GITHUB_ACTION_PATH/pa11y.py ${{ inputs.working-directory }}
+      shell: bash

@@ -13,9 +13,10 @@ This repository contains a collection of GitHub Actions and workflows designed t
 To be able to use the workflow, your repository must have a Makefile (at the location specified by `working-directory`) that defines the following targets:
 
 - `make install` - install the tools needed for all checks
-- `make woke` - run the inclusive language check
+- `make woke` - run the inclusive language check with [woke](https://github.com/get-woke/woke)
 - `make linkcheck` - run the link validator
 - `make spelling` - run the spelling check
+- `make pa11y` - run the accessibility check with [pa11y](https://pa11y.org)
 
 ## Using the Reusable Workflow
 
