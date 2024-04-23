@@ -9,13 +9,13 @@ working_directory = sys.argv[1]
 
 try:
     # If the starter pack Makefile is available, use it
-    makefile = "Makefile"
+    makefile, prefix = "Makefile", ""
     if os.path.exists(os.path.join(working_directory, "Makefile.sp")):
-        makefile = "Makefile.sp"
+        makefile, prefix = "Makefile.sp", "sp-"
 
     # Install the doc framework and run inclusive-language checker
-    run_command(f"make -f {makefile} install", working_directory)
-    run_command(f"make -f {makefile} woke", working_directory)
+    run_command(f"make -f {makefile} {prefix}install", working_directory)
+    run_command(f"make -f {makefile} {prefix}woke", working_directory)
 except subprocess.CalledProcessError as e:
     print(f"Command '{e.cmd}' returned non-zero exit status {e.returncode}.")
     exit(1)
