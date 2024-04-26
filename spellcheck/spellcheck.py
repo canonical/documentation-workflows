@@ -1,3 +1,4 @@
+import os
 import sys
 import subprocess
 
@@ -10,9 +11,14 @@ try:
     # Install Aspell
     run_command('sudo apt-get install aspell aspell-en', working_directory)
 
+    # If the starter pack Makefile is available, use it
+    makefile, prefix = "Makefile", ""
+    if os.path.exists(os.path.join(working_directory, "Makefile.sp")):
+        makefile, prefix = "Makefile.sp", "sp-"
+
     # Install the doc framework and run spelling checker
-    run_command('make install', working_directory)
-    run_command('make spelling', working_directory)
+    run_command(f"make -f {makefile} {prefix}install", working_directory)
+    run_command(f"make -f {makefile} {prefix}spelling", working_directory)
 except subprocess.CalledProcessError as e:
     print(f"Command '{e.cmd}' returned non-zero exit status {e.returncode}.")
     exit(1)
