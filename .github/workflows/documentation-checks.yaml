@@ -11,7 +11,37 @@ on:
         description: 'Version of the Python interpreter to use (defaults to 3.10)'
         required: false
         type: string
-        default: "3.10"
+        default: '3.10'
+      makefile:
+        description: 'Name of the Makefile to use (default: "Makefile.sp" if it exists, "Makefile" otherwise)'
+        required: false
+        type: string
+        default: 'use-default'
+      install-target:
+        description: 'Target to run to install the tools (default: "install")'
+        required: false
+        type: string
+        default: 'install'
+      spelling-target:
+        description: 'Target to run for the spelling check (default: "spelling")'
+        required: false
+        type: string
+        default: 'spelling'
+      woke-target:
+        description: 'Target to run for the inclusive language check (default: "woke")'
+        required: false
+        type: string
+        default: 'woke'
+      linkcheck-target:
+        description: 'Target to run for the link check (default: "linkcheck")'
+        required: false
+        type: string
+        default: 'linkcheck'
+      pa11y-target:
+        description: 'Target to run for the accessibility check (default: "pa11y")'
+        required: false
+        type: string
+        default: 'pa11y'
     outputs:
       spellcheck-result:
         description: "Result of the spelling check"
@@ -50,6 +80,9 @@ jobs:
         uses: canonical/documentation-workflows/spellcheck@main
         with:
           working-directory: ${{ inputs.working-directory }}
+          install-target: ${{ inputs.install-target }}
+          spelling-target: ${{ inputs.spelling-target }}
+          makefile: ${{ inputs.makefile }}
 
       - name: Inclusive Language Check
         id: woke-step
@@ -57,6 +90,9 @@ jobs:
         uses: canonical/documentation-workflows/inclusive-language@main
         with:
           working-directory: ${{ inputs.working-directory }}
+          install-target: ${{ inputs.install-target }}
+          woke-target: ${{ inputs.woke-target }}
+          makefile: ${{ inputs.makefile }}
 
       - name: Link Check
         id: linkcheck-step
@@ -64,6 +100,9 @@ jobs:
         uses: canonical/documentation-workflows/linkcheck@main
         with:
           working-directory: ${{ inputs.working-directory }}
+          install-target: ${{ inputs.install-target }}
+          linkcheck-target: ${{ inputs.linkcheck-target }}
+          makefile: ${{ inputs.makefile }}
 
       - name: Accessibility Check
         id: pa11y-step
@@ -72,3 +111,6 @@ jobs:
         uses: canonical/documentation-workflows/pa11y@main
         with:
           working-directory: ${{ inputs.working-directory }}
+          install-target: ${{ inputs.install-target }}
+          pa11y-target: ${{ inputs.pa11y-target }}
+          makefile: ${{ inputs.makefile }}

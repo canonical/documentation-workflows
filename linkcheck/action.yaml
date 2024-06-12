@@ -5,8 +5,23 @@ inputs:
     description: 'Working directory'
     required: true
     default: '.'
+  makefile:
+    description: 'Name of the Makefile to use (default: "Makefile.sp" if it exists, "Makefile" otherwise)'
+    required: false
+    type: string
+    default: 'use-default'
+  install-target:
+    description: 'Target to run to install the tools (default: "install")'
+    required: false
+    type: string
+    default: 'install'
+  linkcheck-target:
+    description: 'Target to run for the link check (default: "linkcheck")'
+    required: false
+    type: string
+    default: 'linkcheck'
 runs:
   using: 'composite'
   steps:
-    - run: python3 $GITHUB_ACTION_PATH/linkcheck.py ${{ inputs.working-directory }}
+    - run: python3 $GITHUB_ACTION_PATH/linkcheck.py ${{ inputs.working-directory }} --install_target ${{ inputs.install-target }} --linkcheck_target ${{ inputs.linkcheck-target }} --makefile ${{ inputs.makefile }}
       shell: bash
