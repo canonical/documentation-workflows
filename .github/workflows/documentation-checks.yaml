@@ -29,7 +29,7 @@ on:
 jobs:
   docchecks:
     name: Run documentation checks
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     outputs:
       result_spelling: ${{ steps.spellcheck-step.outcome }}
       result_woke: ${{ steps.woke-step.outcome }}
@@ -37,10 +37,10 @@ jobs:
       result_pa11y: ${{ steps.pa11y-step.outcome }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ inputs.python-version }}
 
