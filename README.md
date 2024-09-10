@@ -20,7 +20,7 @@ To be able to use the workflow, your repository must have a Makefile (at the loc
 
 ## Using the Reusable Workflow
 
-To utilize the `documentation-checks.yml` workflow in another repository, create a new workflow and reference it using the `uses` directive. Here's a basic example:
+To use the `documentation-checks.yml` workflow in another repository, create a new workflow and reference it using the `uses` directive. Here's a basic example:
 
 ```yaml
 name: Main Documentation Checks
