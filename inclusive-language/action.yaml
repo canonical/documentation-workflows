@@ -23,5 +23,5 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - run: python3 $GITHUB_ACTION_PATH/inclusive_language.py ${{ inputs.working-directory }} --install_target ${{ inputs.install-target }} --woke_target ${{ inputs.woke-target }} --makefile ${{ inputs.makefile }}
+    - run: python3 $GITHUB_ACTION_PATH/inclusive_language.py ${{ inputs.working-directory }} --woke_target ${{ inputs.woke-target }} --makefile ${{ inputs.makefile }}
       shell: bash
