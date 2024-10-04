@@ -18,6 +18,9 @@ woke_target = args.woke_target
 makefile = args.makefile
 
 try:
+    # Install Woke
+    run_command('sudo snap install woke', args.working_dir)
+
     # If the Makefile has not been specified, use the starter pack Makefile (and the corresponding
     # targets) if available. Otherwise, use "Makefile".
     if makefile == "use-default":
