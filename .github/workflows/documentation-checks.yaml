@@ -80,7 +80,6 @@ jobs:
         uses: canonical/documentation-workflows/spellcheck@main
         with:
           working-directory: ${{ inputs.working-directory }}
-          install-target: ${{ inputs.install-target }}
           spelling-target: ${{ inputs.spelling-target }}
           makefile: ${{ inputs.makefile }}
 
@@ -90,7 +89,6 @@ jobs:
         uses: canonical/documentation-workflows/inclusive-language@main
         with:
           working-directory: ${{ inputs.working-directory }}
-          install-target: ${{ inputs.install-target }}
           woke-target: ${{ inputs.woke-target }}
           makefile: ${{ inputs.makefile }}
 
