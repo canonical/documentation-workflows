@@ -18,7 +18,7 @@ makefile = args.makefile
 
 try:
     # Install Aspell
-    run_command('sudo apt-get install aspell aspell-en', args.working_dir)
+    run_command('sudo apt-get -y install aspell aspell-en', args.working_dir)
 
     # If the Makefile has not been specified, use the starter pack Makefile (and the corresponding
     # targets) if available. Otherwise, use "Makefile".
