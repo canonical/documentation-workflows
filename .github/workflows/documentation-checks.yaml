@@ -37,6 +37,11 @@ on:
         required: false
         type: string
         default: 'linkcheck'
+      fetch-depth:
+        description: 'Fetch depth to support timestamps'
+        required: false
+        type: string
+        default: '0'
       # pa11y-target:
       #   description: 'Target to run for the accessibility check (default: "pa11y")'
       #   required: false
@@ -69,7 +74,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: ${{ inputs.fetch-depth }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
