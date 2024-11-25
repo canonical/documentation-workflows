@@ -42,11 +42,11 @@ on:
         required: false
         type: string
         default: '0'
-      # pa11y-target:
-      #   description: 'Target to run for the accessibility check (default: "pa11y")'
-      #   required: false
-      #   type: string
-      #   default: 'pa11y'
+      pa11y-target:
+        description: 'Target to run for the accessibility check (default: "pa11y")'
+        required: false
+        type: string
+        default: 'pa11y'
     outputs:
       spellcheck-result:
         description: "Result of the spelling check"
