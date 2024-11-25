@@ -41,7 +41,7 @@ on:
         description: 'Fetch depth to support timestamps'
         required: false
         type: string
-        default: '0'
+        default: '[self-hosted, Linux, amd64, noble]'
       pa11y-target:
         description: 'Target to run for the accessibility check (default: "pa11y")'
         required: false
@@ -64,7 +64,7 @@ on:
 jobs:
   docchecks:
     name: Run documentation checks
-    runs-on: [self-hosted, Linux, amd64, noble ]
+    runs-on: ${{ inputs.runs-on }}
     outputs:
       result_spelling: ${{ steps.spellcheck-step.outcome }}
       result_woke: ${{ steps.woke-step.outcome }}
