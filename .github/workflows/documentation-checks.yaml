@@ -37,8 +37,13 @@ on:
         required: false
         type: string
         default: 'linkcheck'
-      fetch-depth:
+            fetch-depth:
         description: 'Fetch depth to support timestamps'
+        required: false
+        type: string
+        default: '0'
+      runs-on:
+        description: 'GitHub runners'
         required: false
         type: string
         default: '[self-hosted, Linux, amd64, noble]'
