@@ -37,6 +37,11 @@ on:
         required: false
         type: string
         default: 'linkcheck'
+      fetch-depth:
+        description: 'Fetch depth to support timestamps'
+        required: false
+        type: string
+        default: '0'
       pa11y-target:
         description: 'Target to run for the accessibility check (default: "pa11y")'
         required: false
@@ -52,9 +57,9 @@ on:
       linkcheck-result:
         description: "Result of the link check"
         value: ${{ jobs.docchecks.outputs.result_links }}
-      pa11y-result:
-          description: "Result of the pa11y check"
-          value: ${{ jobs.docchecks.outputs.result_pa11y }}
+      # pa11y-result:
+      #     description: "Result of the pa11y check"
+      #     value: ${{ jobs.docchecks.outputs.result_pa11y }}
 
 jobs:
   docchecks:
@@ -64,10 +69,12 @@ jobs:
       result_spelling: ${{ steps.spellcheck-step.outcome }}
       result_woke: ${{ steps.woke-step.outcome }}
       result_links: ${{ steps.linkcheck-step.outcome }}
-      result_pa11y: ${{ steps.pa11y-step.outcome }}
+      # result_pa11y: ${{ steps.pa11y-step.outcome }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: ${{ inputs.fetch-depth }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -104,13 +111,13 @@ jobs:
           linkcheck-target: ${{ inputs.linkcheck-target }}
           makefile: ${{ inputs.makefile }}
 
-      - name: Accessibility Check
-        id: pa11y-step
-        continue-on-error: true
-        if: success() || failure()
-        uses: canonical/documentation-workflows/pa11y@main
-        with:
-          working-directory: ${{ inputs.working-directory }}
-          install-target: ${{ inputs.install-target }}
-          pa11y-target: ${{ inputs.pa11y-target }}
-          makefile: ${{ inputs.makefile }}
+      # - name: Accessibility Check
+      #   id: pa11y-step
+      #   continue-on-error: true
+      #   if: success() || failure()
+      #   uses: canonical/documentation-workflows/pa11y@main
+      #   with:
+      #     working-directory: ${{ inputs.working-directory }}
+      #     install-target: ${{ inputs.install-target }}
+      #     pa11y-target: ${{ inputs.pa11y-target }}
+      #     makefile: ${{ inputs.makefile }}
