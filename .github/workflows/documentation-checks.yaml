@@ -37,7 +37,7 @@ on:
         required: false
         type: string
         default: 'linkcheck'
-            fetch-depth:
+      fetch-depth:
         description: 'Fetch depth to support timestamps'
         required: false
         type: string
