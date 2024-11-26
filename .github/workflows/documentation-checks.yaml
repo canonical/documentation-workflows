@@ -46,7 +46,7 @@ on:
         description: 'GitHub runners'
         required: false
         type: string
-        default: 'ubuntu-22.04'
+        default: '["ubuntu-22.04"]'
       pa11y-target:
         description: 'Target to run for the accessibility check (default: "pa11y")'
         required: false
@@ -69,7 +69,7 @@ on:
 jobs:
   docchecks:
     name: Run documentation checks
-    runs-on: ${{ inputs.runs-on }}
+    runs-on: ${{ fromJson(inputs.runs-on) }}
     outputs:
       result_spelling: ${{ steps.spellcheck-step.outcome }}
       result_woke: ${{ steps.woke-step.outcome }}
@@ -115,14 +115,3 @@ jobs:
           install-target: ${{ inputs.install-target }}
           linkcheck-target: ${{ inputs.linkcheck-target }}
           makefile: ${{ inputs.makefile }}
-
-      # - name: Accessibility Check
-      #   id: pa11y-step
-      #   continue-on-error: true
-      #   if: success() || failure()
-      #   uses: canonical/documentation-workflows/pa11y@main
-      #   with:
-      #     working-directory: ${{ inputs.working-directory }}
-      #     install-target: ${{ inputs.install-target }}
-      #     pa11y-target: ${{ inputs.pa11y-target }}
-      #     makefile: ${{ inputs.makefile }}
