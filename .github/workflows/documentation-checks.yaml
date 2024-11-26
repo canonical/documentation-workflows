@@ -46,7 +46,7 @@ on:
         description: 'GitHub runners'
         required: false
         type: string
-        default: 'ubuntu-22.04'
+        default: '["ubuntu-22.04"]'
       pa11y-target:
         description: 'Target to run for the accessibility check (default: "pa11y")'
         required: false
@@ -69,7 +69,7 @@ on:
 jobs:
   docchecks:
     name: Run documentation checks
-    runs-on: ${{ inputs.runs-on }}
+    runs-on: ${{ fromJson(inputs.runs-on) }}
     outputs:
       result_spelling: ${{ steps.spellcheck-step.outcome }}
       result_woke: ${{ steps.woke-step.outcome }}
