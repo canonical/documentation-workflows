@@ -46,7 +46,7 @@ on:
         description: 'GitHub runners'
         required: false
         type: string
-        default: '["ubuntu-22.04"]'
+        default: '["ubuntu-24.04"]'
       pa11y-target:
         description: 'Target to run for the accessibility check (default: "pa11y")'
         required: false
