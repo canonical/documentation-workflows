@@ -31,7 +31,7 @@ on:
 
 jobs:
   documentation-checks:
-    uses: canonical/documentation-workflows/.github/workflows/documentation-checks.yml@main
+    uses: canonical/documentation-workflows/.github/workflows/documentation-checks.yaml@main
     with:
       working-directory: '.'
 ```
@@ -43,7 +43,7 @@ By default, the workflow will run using Python 3.10. You can choose a different 
 
 jobs:
   documentation-checks:
-    uses: canonical/documentation-workflows/.github/workflows/documentation-checks.yml@main
+    uses: canonical/documentation-workflows/.github/workflows/documentation-checks.yaml@main
     with:
       working-directory: '.'
       python-version: '3.12'
