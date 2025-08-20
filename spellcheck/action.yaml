@@ -23,5 +23,5 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - run: python3 $GITHUB_ACTION_PATH/spellcheck.py ${{ inputs.working-directory }} --install_target ${{ inputs.install-target }} --spelling_target ${{ inputs.spelling-target }} --makefile ${{ inputs.makefile }}
+    - run: python3 $GITHUB_ACTION_PATH/spellcheck.py ${{ inputs.working-directory }} --spelling_target ${{ inputs.spelling-target }} --makefile ${{ inputs.makefile }}
       shell: bash
