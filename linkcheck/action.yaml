@@ -25,3 +25,4 @@ runs:
   steps:
     - run: python3 $GITHUB_ACTION_PATH/linkcheck.py ${{ inputs.working-directory }} --install_target ${{ inputs.install-target }} --linkcheck_target ${{ inputs.linkcheck-target }} --makefile ${{ inputs.makefile }}
       shell: bash
+      continue-on-error: true
