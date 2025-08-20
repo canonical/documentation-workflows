@@ -18,6 +18,8 @@ To be able to use the workflow, your repository must have a Makefile (at the loc
 - `make spelling` - run the spelling check
 - `make pa11y` - run the accessibility check with [pa11y](https://pa11y.org)
 
+It is recommended to be on the latest version of the starter pack to run these checks.
+
 ## Using the Reusable Workflow
 
 To use the `documentation-checks.yml` workflow in another repository, create a new workflow and reference it using the `uses` directive. Here's a basic example:
