@@ -1,0 +1,70 @@
+name: Documentation link check
+
+on:
+  workflow_call:
+    inputs:
+      working-directory:
+        description: 'Working directory'
+        required: true
+        type: string
+      python-version:
+        description: 'Version of the Python interpreter to use (defaults to 3.10)'
+        required: false
+        type: string
+        default: '3.10'
+      makefile:
+        description: 'Name of the Makefile to use (default: "Makefile.sp" if it exists, "Makefile" otherwise)'
+        required: false
+        type: string
+        default: 'use-default'
+      install-target:
+        description: 'Target to run to install the tools (default: "install")'
+        required: false
+        type: string
+        default: 'install'
+      linkcheck-target:
+        description: 'Target to run for the link check (default: "linkcheck")'
+        required: false
+        type: string
+        default: 'linkcheck'
+      fetch-depth:
+        description: 'Fetch depth to support timestamps'
+        required: false
+        type: string
+        default: '0'
+      runs-on:
+        description: 'GitHub runners'
+        required: false
+        type: string
+        default: '["ubuntu-24.04"]'
+    outputs:
+      result:
+        description: "Result of the link check"
+        value: ${{ jobs.linkcheck.outputs.result }}
+
+jobs:
+  linkcheck:
+    name: Check links in the documentation
+    runs-on: ${{ fromJson(inputs.runs-on) }}
+    outputs:
+      result: ${{ steps.linkcheck-step.outcome }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: ${{ inputs.fetch-depth }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ inputs.python-version }}
+
+      - name: Link Check
+        id: linkcheck-step
+        if: success() || failure()
+        uses: canonical/documentation-workflows/linkcheck@main
+        with:
+          working-directory: ${{ inputs.working-directory }}
+          install-target: ${{ inputs.install-target }}
+          linkcheck-target: ${{ inputs.linkcheck-target }}
+          makefile: ${{ inputs.makefile }}

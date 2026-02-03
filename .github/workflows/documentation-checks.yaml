@@ -47,82 +47,51 @@ on:
         required: false
         type: string
         default: '["ubuntu-24.04"]'
-      pa11y-target:
-        description: 'Target to run for the accessibility check (default: "pa11y")'
-        required: false
-        type: string
-        default: 'pa11y'
+
     outputs:
       spellcheck-result:
         description: "Result of the spelling check"
-        value: ${{ jobs.docchecks.outputs.result_spelling }}
+        value: ${{ jobs.spellcheck.outputs.result }}
       woke-result:
         description: "Result of the inclusive language check"
-        value: ${{ jobs.docchecks.outputs.result_woke }}
+        value: ${{ jobs.inclusive-language.outputs.result }}
       linkcheck-result:
         description: "Result of the link check"
-        value: ${{ jobs.docchecks.outputs.result_links }}
-      # pa11y-result:
-      #     description: "Result of the pa11y check"
-      #     value: ${{ jobs.docchecks.outputs.result_pa11y }}
+        value: ${{ jobs.linkcheck.outputs.result }}
 
 jobs:
-  docchecks:
-    name: Run documentation checks
-    runs-on: ${{ fromJson(inputs.runs-on) }}
-    outputs:
-      result_spelling: ${{ steps.spellcheck-step.outcome }}
-      result_woke: ${{ steps.woke-step.outcome }}
-      result_links: ${{ steps.linkcheck-step.outcome }}
-      # result_pa11y: ${{ steps.pa11y-step.outcome }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: ${{ inputs.fetch-depth }}
+  spellcheck:
+    name: Spell check
+    uses: ./.github/workflows/spell-check.yaml
+    with:
+      working-directory: ${{ inputs.working-directory }}
+      python-version: ${{ inputs.python-version }}
+      install-target: ${{ inputs.install-target }}
+      spelling-target: ${{ inputs.spelling-target }}
+      makefile: ${{ inputs.makefile }}
+      fetch-depth: ${{ inputs.fetch-depth }}
+      runs-on: ${{ inputs.runs-on }}
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ inputs.python-version }}
+  inclusive-language:
+    name: Inclusive language check
+    uses: ./.github/workflows/inclusive-language-check.yaml
+    with:
+      working-directory: ${{ inputs.working-directory }}
+      python-version: ${{ inputs.python-version }}
+      install-target: ${{ inputs.install-target }}
+      woke-target: ${{ inputs.woke-target }}
+      makefile: ${{ inputs.makefile }}
+      fetch-depth: ${{ inputs.fetch-depth }}
+      runs-on: ${{ inputs.runs-on }}
 
-      - name: Spell Check
-        id: spellcheck-step
-        if: success() || failure()
-        uses: canonical/documentation-workflows/spellcheck@main
-        with:
-          working-directory: ${{ inputs.working-directory }}
-          install-target: ${{ inputs.install-target }}
-          spelling-target: ${{ inputs.spelling-target }}
-          makefile: ${{ inputs.makefile }}
-
-      - name: Inclusive Language Check
-        id: woke-step
-        if: success() || failure()
-        uses: canonical/documentation-workflows/inclusive-language@main
-        with:
-          working-directory: ${{ inputs.working-directory }}
-          install-target: ${{ inputs.install-target }}
-          woke-target: ${{ inputs.woke-target }}
-          makefile: ${{ inputs.makefile }}
-
-      - name: Link Check
-        id: linkcheck-step
-        if: success() || failure()
-        uses: canonical/documentation-workflows/linkcheck@main
-        with:
-          working-directory: ${{ inputs.working-directory }}
-          install-target: ${{ inputs.install-target }}
-          linkcheck-target: ${{ inputs.linkcheck-target }}
-          makefile: ${{ inputs.makefile }}
-
-      # - name: Accessibility Check
-      #   id: pa11y-step
-      #   continue-on-error: true
-      #   if: success() || failure()
-      #   uses: canonical/documentation-workflows/pa11y@main
-      #   with:
-      #     working-directory: ${{ inputs.working-directory }}
-      #     install-target: ${{ inputs.install-target }}
-      #     pa11y-target: ${{ inputs.pa11y-target }}
-      #     makefile: ${{ inputs.makefile }}
+  linkcheck:
+    name: Link check
+    uses: ./.github/workflows/link-check.yaml
+    with:
+      working-directory: ${{ inputs.working-directory }}
+      python-version: ${{ inputs.python-version }}
+      install-target: ${{ inputs.install-target }}
+      linkcheck-target: ${{ inputs.linkcheck-target }}
+      makefile: ${{ inputs.makefile }}
+      fetch-depth: ${{ inputs.fetch-depth }}
+      runs-on: ${{ inputs.runs-on }}
