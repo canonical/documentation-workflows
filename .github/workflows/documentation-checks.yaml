@@ -62,7 +62,7 @@ on:
 jobs:
   spellcheck:
     name: Spell check
-    uses: ./.github/workflows/spell-check.yaml
+    uses: ./.github/workflows/spelling-check.yaml
     with:
       working-directory: ${{ inputs.working-directory }}
       python-version: ${{ inputs.python-version }}
