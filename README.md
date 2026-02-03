@@ -1,56 +1,80 @@
 # Documentation Workflows
 
-This repository contains a collection of GitHub Actions and workflows designed to automate various checks and processes related to documentation. These tools aim to ensure the quality, consistency, and accuracy of documentation across projects.
-
-## Overview
-
-- **GitHub Actions**: We have a set of individual actions that can be used in any workflow. These actions are designed to perform specific tasks such as spell checking, inclusive language checks, and link validation.
-  
-- **Reusable Workflows**: In addition to individual actions, this repository offers a top-level workflow (`documentation-checks.yaml`) that combines multiple checks. This workflow can be called from other repositories, providing a comprehensive documentation validation process in a single step.
+This repository contains composite actions and workflows that automate documentation
+quality checks.
 
 ## Requirements
 
-To be able to use the workflow, your repository must have a Makefile (at the location specified by `working-directory`) that defines the following targets:
+To use the workflows in your documentation project, it's recommended that you
+incorporate Canonical's [Sphinx Starter
+Pack](https://github.com/canonical/sphinx-docs-starter-pack). With the Starter Pack in
+place, you can use the workflows without overriding the default inputs or implementing
+the checks in your own Makefile.
 
-- `make install` - install the tools needed for all checks
-- `make woke` - run the inclusive language check with [woke](https://github.com/get-woke/woke)
-- `make linkcheck` - run the link validator
-- `make spelling` - run the spelling check
-- `make pa11y` - run the accessibility check with [pa11y](https://pa11y.org)
+## `documentation-checks.yaml`
 
-## Using the Reusable Workflow
+The primary documentation workflow checks spelling, links, and inclusive language in a
+documentation project.
 
-To use the `documentation-checks.yml` workflow in another repository, create a new workflow and reference it using the `uses` directive. Here's a basic example:
+### Usage
 
-```yaml
-name: Main Documentation Checks
-
-on:
-  - push
-  - pull_request
-
-jobs:
-  documentation-checks:
-    uses: canonical/documentation-workflows/.github/workflows/documentation-checks.yml@main
-    with:
-      working-directory: '.'
-```
-
-By default, the workflow will run using Python 3.10. You can choose a different version of the interpreter with the `python-version` input variable. For example:
+If your project uses the Starter Pack, you can add the documentation checks to a new
+or existing workflow's jobs with:
 
 ```yaml
-...
-
 jobs:
+  [...]
   documentation-checks:
-    uses: canonical/documentation-workflows/.github/workflows/documentation-checks.yml@main
+    uses: canonical/documentation-workflows/.github/workflows/documentation-checks.yaml@main
     with:
-      working-directory: '.'
-      python-version: '3.12'
+      working-directory: 'docs'
 ```
 
-If you want to use a workflow version other than `main`, replace `@main` with the appropriate branch or tag.
+### Inputs
+
+If your project doesn't use the Starter Pack or consumes it in a non-traditional way,
+declare any of the following inputs to customize the workflow as needed:
+
+| Input               | Description                                                    | Default                         |
+|---------------------|----------------------------------------------------------------|---------------------------------|
+| `working-directory` | The root of the documentation project. This input is required. | None                            |
+| `python-version`    | The Python interpreter to use for the workflow's jobs.         | `'3.10'`                        |
+| `fetch-depth`       | The number of commits to fetch from your repository.           | The full history is fetched.    |
+| `runs-on`           | The host system for the workflow's runners.                    | `'["ubuntu-24.04"]'`            |
+| `makefile`          | The Makefile that checks are invoked from.                     | `'Makefile'`                    |
+| `install-target`    | The make target for installing required tools.                 | `'install'`                     |
+| `spelling-target`   | The make target to run for the spelling check.                 | `'spelling'`                    |
+| `woke-target`       | The make target to run for the inclusive language check.       | `'woke'`                        |
+| `linkcheck-target`  | The make target to run for the link check.                     | `'linkcheck'`                   |
+
+## Individual checks
+
+Workflows are also available for each individual check, so that projects may run a
+subset of those defined in `documentation-checks.yaml`. The following jobs are
+equivalent to the `documentation-checks` job from the previous example:
+
+```yaml
+jobs:
+  spell-check:
+    uses: canonical/documentation-workflows/.github/workflows/spelling-check.yaml@main
+    with:
+      working-directory: "docs"
+  inclusive-language-check:
+    uses: canonical/documentation-workflows/.github/workflows/inclusive-language-check.yaml@main
+    with:
+      working-directory: "docs"    
+  link-check:
+    uses: canonical/documentation-workflows/.github/workflows/link-check.yaml@main
+    with:
+      working-directory: "docs"
+```
+
+Each of these workflows supports the same inputs as `documentation-checks.yaml`, save
+the targets for the other checks. For example, the `link-check.yaml` workflow doesn't
+support the `spelling-target` or `woke-target` inputs.
 
 ## Contributing
 
-We welcome contributions to improve and expand the capabilities of this repository. If you have a new check or enhancement in mind, please open an issue to discuss it or submit a pull request.
+We welcome any and all contributions. For new features and enhancements, [open an
+issue](https://github.com/canonical/documentation-workflows/issues/new) and state that
+you'd like to take it on. A maintainer will then review the issue and assign it to you.
