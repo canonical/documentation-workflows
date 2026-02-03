@@ -49,9 +49,9 @@ declare any of the following inputs to customize the workflow as needed:
 
 ## Individual checks
 
-Workflows are also available for each individual check, so that projects may run a
-subset of those defined in `documentation-checks.yaml`. The following jobs are
-equivalent to the `documentation-checks` job from the previous example:
+Workflows are available for each individual check so that projects may run a subset of
+those defined in `documentation-checks.yaml`. The following jobs are equivalent to the
+`documentation-checks` job from the previous example:
 
 ```yaml
 jobs:
