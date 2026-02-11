@@ -61,7 +61,6 @@ jobs:
 
       - name: Spell Check
         id: spellcheck-step
-        if: success() || failure()
         uses: canonical/documentation-workflows/spellcheck@main
         with:
           working-directory: ${{ inputs.working-directory }}

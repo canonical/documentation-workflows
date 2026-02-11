@@ -61,7 +61,6 @@ jobs:
 
       - name: Link Check
         id: linkcheck-step
-        if: success() || failure()
         uses: canonical/documentation-workflows/linkcheck@main
         with:
           working-directory: ${{ inputs.working-directory }}
