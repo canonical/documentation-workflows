@@ -42,6 +42,11 @@ on:
         required: false
         type: string
         default: '0'
+      submodules:
+        description: 'Whether to checkout submodules when checking out the repository'
+        required: false
+        type: boolean
+        default: false
       runs-on:
         description: 'GitHub runners'
         required: false
@@ -70,6 +75,7 @@ jobs:
       spelling-target: ${{ inputs.spelling-target }}
       makefile: ${{ inputs.makefile }}
       fetch-depth: ${{ inputs.fetch-depth }}
+      submodules: ${{ inputs.submodules }}
       runs-on: ${{ inputs.runs-on }}
 
   inclusive-language:
@@ -82,6 +88,7 @@ jobs:
       woke-target: ${{ inputs.woke-target }}
       makefile: ${{ inputs.makefile }}
       fetch-depth: ${{ inputs.fetch-depth }}
+      submodules: ${{ inputs.submodules }}
       runs-on: ${{ inputs.runs-on }}
 
   linkcheck:
@@ -94,4 +101,5 @@ jobs:
       linkcheck-target: ${{ inputs.linkcheck-target }}
       makefile: ${{ inputs.makefile }}
       fetch-depth: ${{ inputs.fetch-depth }}
+      submodules: ${{ inputs.submodules }}
       runs-on: ${{ inputs.runs-on }}
