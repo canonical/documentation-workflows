@@ -32,6 +32,11 @@ on:
         required: false
         type: string
         default: '0'
+      submodules:
+        description: 'Whether to check out submodules along with the repository'
+        required: false
+        type: boolean
+        default: false
       runs-on:
         description: 'GitHub runners'
         required: false
@@ -53,6 +58,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: ${{ inputs.fetch-depth }}
+          submodules: ${{ inputs.submodules }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
