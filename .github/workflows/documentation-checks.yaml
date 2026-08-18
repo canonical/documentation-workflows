@@ -43,7 +43,7 @@ on:
         type: string
         default: '0'
       submodules:
-        description: 'Whether to checkout submodules when checking out the repository'
+        description: 'Whether to check out submodules along with the repository'
         required: false
         type: boolean
         default: false
