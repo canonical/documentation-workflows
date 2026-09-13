@@ -11,7 +11,7 @@ on:
         description: 'Version of the Python interpreter to use (defaults to 3.10)'
         required: false
         type: string
-        default: '3.10'
+        default: '3.12'
       makefile:
         description: 'Name of the Makefile to use (default: "Makefile.sp" if it exists, "Makefile" otherwise)'
         required: false
