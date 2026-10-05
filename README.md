@@ -1,3 +1,10 @@
+> **These workflows are deprecated.**
+>
+> As of the Sphinx Stack 3.0 release, these actions and workflows will only receive
+> critical security and bug fixes. All Canonical documentation projects should update
+> their workflows to the more secure and easily customizable local checks in Sphinx
+> Stack 3.0 and higher.
+
 # Documentation Workflows
 
 This repository contains composite actions and workflows that automate documentation
