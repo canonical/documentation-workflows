@@ -20,6 +20,7 @@ try:
     # Speed up by not generating the manpages DB
     run_command('sudo rm -vf /var/lib/man-db/auto-update', args.working_dir)
     # Install Aspell
+    run_command('DEBIAN_FRONTEND=noninteractive sudo apt-get update', args.working_dir)
     run_command('DEBIAN_FRONTEND=noninteractive sudo apt-get -o Dpkg::options::=--force-unsafe-io install -y aspell aspell-en', args.working_dir)
 
     # If the Makefile has not been specified, use the starter pack Makefile (and the corresponding
